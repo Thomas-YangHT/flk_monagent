@@ -1,0 +1,32 @@
+name: Test for actions runner baseed on python 2.7
+
+on: push
+
+jobs:
+  build:
+    name: My build
+    runs-on: [self-hosted, linux]
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+    - name: Test with pytest
+      run: |
+        py.test
+    - name: build
+      env:
+        MY_VAR: Hi there! My name is
+      run: |
+        echo $MY_VAR
+        docker build -t 192.168.100.71:5000/flk_monagent -f ./dockerfile.django.gitlab-runner .    
+        #docker push 192.168.100.71:5000/flk_monagent
+        sh ./docker-py-uwsgi-nginx.sh
+      shell: bash
+    - name: failed
+      if: failure()
+      run: |
+        python sendmesstowx.py "build failed: https://github.com/Thomas-YangHT/django/edit/master/.github/workflows/actions.yml"
+    - name: successed
+      if: success()
+      run: |
+        python sendmesstowx.py "build successed"
+
