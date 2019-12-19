@@ -1,3 +1,4 @@
+docker rm -f uwsgi
 docker run --name uwsgi \
 -v /opt/python/uwsgi:/uwsgi \
 --restart=always \
