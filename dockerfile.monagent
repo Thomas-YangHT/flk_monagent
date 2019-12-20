@@ -1,0 +1,3 @@
+FROM flk_monagent:base
+COPY . /uwsgi
+
