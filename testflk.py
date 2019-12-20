@@ -6,6 +6,7 @@ from flask import render_template
 import MySQLdb
 import sys,urllib,urllib2
 import commands
+import json
 #避免译码问题
 if sys.getdefaultencoding() != 'utf-8':
     reload(sys)
@@ -71,7 +72,7 @@ def query():
     context['count']=count
     context['index']=index
     context['result']=result
-
+    context = json.dumps(context)
         
    # return render_template("student.html",sql=sql,count=count,index=index,result=result)
     return context
