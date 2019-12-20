@@ -1,3 +1,5 @@
 FROM flk_monagent:base
 COPY . /uwsgi
-
+RUN ls -l /uwsgi
+WORKDIR /uwsgi
+RUN  ls -l && chmod a+x startpython.sh
