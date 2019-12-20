@@ -1,4 +1,5 @@
 FROM flk_monagent:base
+RUN rm -rf /uwsgi
 COPY . /uwsgi
 RUN ls -l /uwsgi
 WORKDIR /uwsgi
