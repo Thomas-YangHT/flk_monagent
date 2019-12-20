@@ -1,0 +1,14 @@
+FROM python:alpine
+#RUN echo  'http://mirrors.ustc.edu.cn/alpine/v3.9/main'> /etc/apk/repositories && \
+#echo  'http://mirrors.ustc.edu.cn/alpine/v3.9/community' >>/etc/apk/repositories && \
+RUN  uname -a && \
+echo  'http://mirrors.tuna.tsinghua.edu.cn/alpine/v3.9/main'> /etc/apk/repositories && \
+echo  'http://mirrors.tuna.tsinghua.edu.cn/alpine/v3.9/community' >>/etc/apk/repositories && \
+cat /etc/apk/repositories && \
+apk add  --no-cache nginx uwsgi uwsgi-python py-flask py-mysqlclient && \
+#git clone https://github.com/PanJiaChen/vue-element-admin.git && \
+ls .
+COPY . /uwsgi
+WORKDIR /uwsgi
+RUN  ls -l && chmod a+x startpython.sh
+CMD ["/uwsgi/startpython.sh"]
