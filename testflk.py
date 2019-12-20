@@ -22,7 +22,7 @@ app.debug = True
 #测试用       
 @app.route('/student', methods=['GET', 'POST'])
 def home():
-    return '<h1>Home</h1>'
+    return '<h1>HomePage</h1>'
 
 #输出表单form    
 @app.route('/student/chengji', methods=['GET'])
@@ -73,7 +73,7 @@ def query():
     context['index']=index
     context['result']=result
     context = json.dumps(context)
-        
+    print(context)    
    # return render_template("student.html",sql=sql,count=count,index=index,result=result)
     return context
 
