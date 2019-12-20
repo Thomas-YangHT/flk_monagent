@@ -22,9 +22,9 @@ RUN yum -y install epel-release && \
 #设置环境变量
 ENV LC_ALL zh_CN.utf8
 RUN yum -y install git && \
-git clone https://github.com/Thomas-YangHT/flk_monagent.git && \
-cd flk_monagent
-COPY . /uwsgi
+git clone https://github.com/Thomas-YangHT/flk_monagent.git 
+RUN mv  flk_monagent uwsgi
+#COPY . /uwsgi
 WORKDIR /uwsgi
 RUN  ls -l && chmod a+x startpython.sh
 #EXPOSE 80 443 
