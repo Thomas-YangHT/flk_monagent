@@ -30,17 +30,19 @@ def chengji_form():
     return json.dumps("test")
 
 #处理表单提交信息，查询数据库，输出结果 
-@app.route('/student/query', methods=['POST'])
+@app.route('/student/query', methods=['GET'])
 def query():
-    ClassName=request.form['ClassName']
-    TestLevel=request.form['TestLevel']
-    if ClassName=='': 
-        ClassName="1807"
-    if TestLevel=='':
-        TestLevel='1'
+   # ClassName=request.form['ClassName']
+   # TestLevel=request.form['TestLevel']
+   # if ClassName=='': 
+   #     ClassName="1807"
+   # if TestLevel=='':
+   #     TestLevel='1'
   #  try:
   #测试代码
   #print TestLevel
+    ClassName="1807"
+    TestLevel='1'
     conn=MySQLdb.connect(host='192.168.31.140',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     cur=conn.cursor()
 	#查询成绩的SQL
