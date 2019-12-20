@@ -18,7 +18,7 @@ jobs:
       run: |
         echo $MY_VAR
         version=`date +%Y%m%d-%H%M%S`
-        docker build -t 192.168.100.71:5000/flk_monagent:v$version -f ./dockerfile.flask.python .    
+        docker build --no-cache -t 192.168.100.71:5000/flk_monagent:v$version -f ./dockerfile.monagent .    
         #docker push 192.168.100.71:5000/flk_monagent
         docker tag  192.168.100.71:5000/flk_monagent:v$version   192.168.100.71:5000/flk_monagent
         sh ./docker-py-uwsgi-nginx.sh
