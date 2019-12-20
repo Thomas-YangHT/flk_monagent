@@ -1,5 +1,11 @@
 FROM python:alpine
+RUN echo  'http://mirrors.ustc.edu.cn/alpine/v3.9/main'> /etc/apk/repositories && \
+echo  'http://mirrors.ustc.edu.cn/alpine/v3.9/community' >>/etc/apk/repositories && \
+cat /etc/apk/repositories
+RUN apk add  --no-cache git nginx uwsgi && \
+#git clone https://github.com/PanJiaChen/vue-element-admin.git
 RUN  ls .
-COPY . /uwsgi/
-RUN  ls /uwsgi/
+COPY . /uwsgi
+WORKDIR /uwsgi
+RUN  ls -l
 CMD ["/uwsgi/startpython.sh"]
