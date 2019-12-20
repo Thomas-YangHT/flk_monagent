@@ -27,7 +27,7 @@ def home():
 #输出表单form    
 @app.route('/student/chengji', methods=['GET'])
 def chengji_form():
-    return text_content
+    return json.dumps("test")
 
 #处理表单提交信息，查询数据库，输出结果 
 @app.route('/student/query', methods=['POST'])
@@ -41,7 +41,7 @@ def query():
   #  try:
   #测试代码
   #print TestLevel
-    conn=MySQLdb.connect(host='192.168.100.71',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
+    conn=MySQLdb.connect(host='192.168.31.140',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     cur=conn.cursor()
 	#查询成绩的SQL
     sql1=("select a.name,b.* from base as a,chengji as b where a.stud_no=b.stud_no and a.stud_no like '"+ClassName+"%'")
