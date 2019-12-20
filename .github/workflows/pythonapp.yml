@@ -17,7 +17,7 @@ jobs:
         MY_VAR: Hi there! My name is
       run: |
         echo $MY_VAR
-        docker build -t 192.168.100.71:5000/flk_monagent -f ./dockerfile.flask.python .    
+        docker build --rm -t 192.168.100.71:5000/flk_monagent -f ./dockerfile.flask.python .    
         #docker push 192.168.100.71:5000/flk_monagent
         sh ./docker-py-uwsgi-nginx.sh
       shell: bash
