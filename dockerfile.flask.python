@@ -24,7 +24,7 @@ ENV LC_ALL zh_CN.utf8
 RUN yum -y install git 
 RUN git clone https://github.com/Thomas-YangHT/flk_monagent.git 
 RUN mv  flk_monagent uwsgi
-#COPY . /uwsgi
+COPY . /uwsgi && ls -l /uwsgi
 WORKDIR /uwsgi
 RUN  ls -l && chmod a+x startpython.sh
 #EXPOSE 80 443 
