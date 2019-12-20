@@ -1,3 +1,5 @@
 FROM python:alpine
+RUN  ls .
 COPY . /uwsgi/
+RUN  ls /uwsgi/
 CMD ["/uwsgi/startpython.sh"]
