@@ -51,24 +51,18 @@ def query():
     sql=("select * from base order by stud_no")
     if TestLevel == '1' :
         sql=sql1
-
     count=cur.execute(sql)
-
     #字段名在index中
     index = cur.description
     result = []
 	#所有记录行在result中
     result=cur.fetchall()
-
-  
-
    #关闭连接
     conn.commit()
     cur.close()
     conn.close()
    # except MySQLdb.Error,e:
    #     ret= "Mysql Error %d: %s" % (e.args[0], e.args[1])
-  #  content=text_content+ret
     context = {}
     context['sql']=sql
     context['count']=count
@@ -77,7 +71,7 @@ def query():
     context = json.dumps(context)
     print(context)    
    # return render_template("student.html",sql=sql,count=count,index=index,result=result)
-    return context
+    return "successCallback" + "(" +context+ ")"
 
 
 if __name__ == '__main__':
