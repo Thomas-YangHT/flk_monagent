@@ -63,33 +63,11 @@ def context():
 #处理表单提交信息，查询数据库，输出结果 jsonp
 @app.route('/student/query', methods=['GET'])
 def query():
-   # ClassName=request.form['ClassName']
-   # TestLevel=request.form['TestLevel']
-   # if ClassName=='': 
-   #     ClassName="1807"
-   # if TestLevel=='':
-   #     TestLevel='1'
-   # context=context()
-    print(context)    
-   # return render_template("student.html",sql=sql,count=count,index=index,result=result)
-    return "successCallback" + "(" +json.dumps(context)+ ")"
+    return "successCallback" + "(" +json.dumps(context())+ ")"
 
 #处理表单提交信息，查询数据库，输出结果  json
 @app.route('/student/jsonquery', methods=['GET'])
 def jsonquery():
-   # ClassName=request.form['ClassName']
-   # TestLevel=request.form['TestLevel']
-   # if ClassName=='': 
-   #     ClassName="1807"
-   # if TestLevel=='':
-   #     TestLevel='1'
-  #  try:
-  #测试代码
-  #print TestLevel
-   # context = jsonify(context)
-   # print(context)    
-   # return render_template("student.html",sql=sql,count=count,index=index,result=result)
-    cont=context()
     return jsonify(context())
 
 
