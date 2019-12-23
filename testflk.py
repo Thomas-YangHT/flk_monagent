@@ -68,7 +68,10 @@ def query():
 #处理表单提交信息，查询数据库，输出结果  json
 @app.route('/student/jsonquery', methods=['GET'])
 def jsonquery():
-    return jsonify(context())
+    from flask import make_response
+    rst = make_response(jsonify(context()))
+    rst.headers['Access-Control-Allow-Origin'] = '*'
+    return rst, 201
 
 
 if __name__ == '__main__':
