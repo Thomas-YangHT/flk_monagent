@@ -27,7 +27,7 @@ def home():
 #输出表单form    
 @app.route('/student/chengji', methods=['GET'])
 def chengji_form():
-    return json.dumps({"test",""})
+    return json.dumps({"test":""})
 
 #处理表单提交信息，查询数据库，输出结果 
 @app.route('/student/query', methods=['GET'])
