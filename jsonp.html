@@ -11,22 +11,23 @@
 <script>
 //$.getJSON("http://192.168.1.10:8101/student/query?jsoncallback=?", function(data) {
 $.ajax({
-     type:"GET",
-     url: "http://192.168.1.10:8101/student/query",
-     cache:false,
-     dataType:"jsonp",
-	 jsonp:"callback",
-	 jsonpCallback: "successCallback",
-     success:function(data){    
-    var html = '<tr>';
-	html+=data.count+data.sql
-    for(var i = 0; i < data.index.length; i++)
-    {
+    type:"GET",
+    //url: "http://192.168.1.10:8101/student/query",
+    url: "http://192.168.100.71:8101/student/query",
+    cache:false,
+    dataType:"jsonp",
+	jsonp:"callback",
+	jsonpCallback: "successCallback",
+    success:function(data){    
+      var html = '<tr>';
+  	  html+=data.count+data.sql
+      for(var i = 0; i < data.index.length; i++)
+      {
         html += '<th>' + data.index[i][0] + '</th>';
-    }
-    html += '</tr>';
-    console.log(data);
-    $('#divCustomers').html(html); 
+      }
+      html += '</tr>';
+      console.log(data);
+      $('#divCustomers').html(html); 
 	}
 });
 </script>
