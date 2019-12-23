@@ -30,16 +30,16 @@ def home():
 def chengji_form():
     return json.dumps({"test":""})
 
-def  context():
+#response context
+def context():
     ClassName="1807"
     TestLevel='1'
-   # conn=MySQLdb.connect(host='192.168.31.140',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
+    # conn=MySQLdb.connect(host='192.168.31.140',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     conn=MySQLdb.connect(host='192.168.100.71',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
-
     cur=conn.cursor()
-  #查询成绩的SQL
+    #查询成绩的SQL
     sql1=("select a.name,b.* from base as a,chengji as b where a.stud_no=b.stud_no and a.stud_no like '"+ClassName+"%'")
-  #查询基本信息的SQL
+    #查询基本信息的SQL
     sql=("select * from base order by stud_no")
     if TestLevel == '1' :
         sql=sql1
@@ -47,14 +47,12 @@ def  context():
     #字段名在index中
     index = cur.description
     result = []
-  #所有记录行在result中
+    #所有记录行在result中
     result=cur.fetchall()
-   #关闭连接
+    #关闭连接
     conn.commit()
     cur.close()
     conn.close()
-   # except MySQLdb.Error,e:
-   #     ret= "Mysql Error %d: %s" % (e.args[0], e.args[1])
     context = {}
     context['sql']=sql
     context['count']=count
@@ -71,7 +69,7 @@ def query():
    #     ClassName="1807"
    # if TestLevel=='':
    #     TestLevel='1'
-    context=context()
+   # context=context()
     print(context)    
    # return render_template("student.html",sql=sql,count=count,index=index,result=result)
     return "successCallback" + "(" +json.dumps(context)+ ")"
@@ -88,12 +86,11 @@ def jsonquery():
   #  try:
   #测试代码
   #print TestLevel
-
    # context = jsonify(context)
    # print(context)    
    # return render_template("student.html",sql=sql,count=count,index=index,result=result)
-    context=context()
-    return jsonify(context)
+    cont=context()
+    return jsonify(context())
 
 
 if __name__ == '__main__':
