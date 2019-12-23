@@ -4,12 +4,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CHENGJI Query</title>
-
+<!--
   <link rel="stylesheet" href="./student_files/jquery-ui.css">
   <link rel="stylesheet" href="./student_files/style.css">
   <script src="./student_files/jquery-1.12.4.js"></script>
   <script src="./student_files/jquery-ui.js"></script>
-
+-->
  <script type="text/javascript"> 
  function altRows(id){           
     if(document.getElementsByTagName){          
@@ -86,29 +86,44 @@
  <link type="text/css" rel="stylesheet" href="chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/content.css"></head>
 <body style="margin:0 auto;text-align:center;">
 <br>
- <form id="form" name="form" method="post" action="http://192.168.31.253:8101/student/query">
+ <form id="form" name="form" method="get" action="http://192.168.1.71:8101/student/jsonquery">
  班级: <input type="text" name="ClassName" id="ClassName" value="1807">
  项目: <input type="text" name="TestLevel" id="TestLevel" value="1">
  0-学生基本信息；1-计算机基础成绩；
    <input class="shiny-blue" type="submit" name="Submit" value="提交">
  </form>
-{{  sql }} </br>
+<div id="app">
+   <div> sql: {{info.sql}} </div>
 </br><div style='margin:0 auto;text-align:center;font-size:22px;font-family:SimHei;'>欢迎您
-使用数据查询，数据如下：(共计{{ count }}行{{  index|length }}列)</div></br>
+使用数据查询，数据如下：(共计{{ info.count }}行{{  index.length() }}列)</div></br>
 <table class='altrowstable' id='alternatecolor' style='margin:0 auto;align:center;'> 
 <tr>
-{%  for i in range(index|length) %} 
-        <th>{{ index[i][0]|title }}</th>
-{%  endfor %}
+    <th  v-for="i in info.index" >{{ i[0] }} </th>
 </tr>
-
-{%  for res in result  %}
-        <tr>
-        {% for i in res %}
-            <td>{{ i }}</td>
-		{% endfor %}
-        </tr>
-{%  endfor %}
+ <tr  v-for="j in info.result">
+      <td  v-for="k in j"> {{ k }} </td>
+ </tr>  
 </table>
+</div>
 
+<script type = "text/javascript">
+new Vue({
+  el: '#app',
+  data () {
+    return {
+      i: '0',
+      j: '0',
+      k: '0',
+      info: {}
+    }
+  },
+  mounted () {
+    axios.get('http://192.168.1.71:8101/student/jsonquery')
+      .then(response => (this.info = response.data))
+      .catch(function (error) { // 请求失败处理
+       console.log(error);
+      });
+  }
+})
+</script>
 </body></html>
