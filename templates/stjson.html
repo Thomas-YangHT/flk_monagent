@@ -10,6 +10,8 @@
   <script src="./student_files/jquery-1.12.4.js"></script>
   <script src="./student_files/jquery-ui.js"></script>
 -->
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script> 
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
  <script type="text/javascript"> 
  function altRows(id){           
     if(document.getElementsByTagName){          
@@ -95,7 +97,7 @@
 <div id="app">
    <div> sql: {{info.sql}} </div>
 </br><div style='margin:0 auto;text-align:center;font-size:22px;font-family:SimHei;'>欢迎您
-使用数据查询，数据如下：(共计{{ info.count }}行{{  index.length() }}列)</div></br>
+使用数据查询，数据如下：(共计{{ info.count }}行{{  info.index.length }}列)</div></br>
 <table class='altrowstable' id='alternatecolor' style='margin:0 auto;align:center;'> 
 <tr>
     <th  v-for="i in info.index" >{{ i[0] }} </th>
@@ -114,7 +116,11 @@ new Vue({
       i: '0',
       j: '0',
       k: '0',
-      info: {}
+      info: {
+        count: '',
+        index: '',
+        sql: '',
+      }
     }
   },
   mounted () {
