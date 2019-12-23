@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 from flask import Flask
 from flask import request
+from flask import jsonify
 from flask import render_template
 import MySQLdb
 import sys,urllib,urllib2
@@ -29,27 +30,16 @@ def home():
 def chengji_form():
     return json.dumps({"test":""})
 
-#处理表单提交信息，查询数据库，输出结果 
-@app.route('/student/query', methods=['GET'])
-def query():
-   # ClassName=request.form['ClassName']
-   # TestLevel=request.form['TestLevel']
-   # if ClassName=='': 
-   #     ClassName="1807"
-   # if TestLevel=='':
-   #     TestLevel='1'
-  #  try:
-  #测试代码
-  #print TestLevel
+def  context():
     ClassName="1807"
     TestLevel='1'
    # conn=MySQLdb.connect(host='192.168.31.140',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     conn=MySQLdb.connect(host='192.168.100.71',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
 
     cur=conn.cursor()
-	#查询成绩的SQL
+  #查询成绩的SQL
     sql1=("select a.name,b.* from base as a,chengji as b where a.stud_no=b.stud_no and a.stud_no like '"+ClassName+"%'")
-	#查询基本信息的SQL
+  #查询基本信息的SQL
     sql=("select * from base order by stud_no")
     if TestLevel == '1' :
         sql=sql1
@@ -57,7 +47,7 @@ def query():
     #字段名在index中
     index = cur.description
     result = []
-	#所有记录行在result中
+  #所有记录行在result中
     result=cur.fetchall()
    #关闭连接
     conn.commit()
@@ -70,10 +60,40 @@ def query():
     context['count']=count
     context['index']=index
     context['result']=result
-    context = json.dumps(context)
+    return context
+
+#处理表单提交信息，查询数据库，输出结果 jsonp
+@app.route('/student/query', methods=['GET'])
+def query():
+   # ClassName=request.form['ClassName']
+   # TestLevel=request.form['TestLevel']
+   # if ClassName=='': 
+   #     ClassName="1807"
+   # if TestLevel=='':
+   #     TestLevel='1'
+    context=context()
     print(context)    
    # return render_template("student.html",sql=sql,count=count,index=index,result=result)
-    return "successCallback" + "(" +context+ ")"
+    return "successCallback" + "(" +json.dumps(context)+ ")"
+
+#处理表单提交信息，查询数据库，输出结果  json
+@app.route('/student/jsonquery', methods=['GET'])
+def jsonquery():
+   # ClassName=request.form['ClassName']
+   # TestLevel=request.form['TestLevel']
+   # if ClassName=='': 
+   #     ClassName="1807"
+   # if TestLevel=='':
+   #     TestLevel='1'
+  #  try:
+  #测试代码
+  #print TestLevel
+
+   # context = jsonify(context)
+   # print(context)    
+   # return render_template("student.html",sql=sql,count=count,index=index,result=result)
+    context=context()
+    return jsonify(context)
 
 
 if __name__ == '__main__':
