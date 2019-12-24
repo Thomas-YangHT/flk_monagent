@@ -88,11 +88,11 @@
  <link type="text/css" rel="stylesheet" href="chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/content.css"></head>
 <body style="margin:0 auto;text-align:center;">
 <br>
- <form id="form" name="form" method="get" action="http://192.168.1.71:8101/student/jsonquery">
+ <form id="form" name="form" method="get" action=''  >
  班级: <input type="text" name="ClassName" id="ClassName" value="1807">
  项目: <input type="text" name="TestLevel" id="TestLevel" value="1">
  0-学生基本信息；1-计算机基础成绩；
-   <input class="shiny-blue" type="submit" name="Submit" value="提交">
+   <input class="shiny-blue" type="submit" name="Submit" onclick="onSubmit()" value="提交" >
  </form>
 <div id="app">
    <div> sql: {{info.sql}} </div>
@@ -121,6 +121,30 @@ new Vue({
         index: '',
         sql: '',
       }
+    }
+  },
+  methods: {
+    onSubmit() {
+      /* json格式提交： */
+      // let formData = JSON.stringify(this.formMess);
+ 
+      /* formData格式提交： */
+      let formData = new FormData();
+      for(var key in this.formMess){
+        formData.append(key,this.formMess[key]);
+      }
+ 
+        axios({
+	    method:"get",
+	    url:"http://192.168.1.71:8101/student/jsonquery",
+	    headers: {
+		  "Content-Type": "multipart/form-data"
+	    },
+	    withCredentials:true,
+	    data:formData
+	}).then((res)=>{
+            console.log(res);
+        });
     }
   },
   mounted () {
