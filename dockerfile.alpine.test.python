@@ -7,7 +7,7 @@ RUN  uname -a && \
 echo  'http://mirrors.tuna.tsinghua.edu.cn/alpine/v3.10/main'> /etc/apk/repositories && \
 echo  'http://mirrors.tuna.tsinghua.edu.cn/alpine/v3.10/community' >>/etc/apk/repositories && \
 cat /etc/apk/repositories && \
-apk add  --no-cache nginx uwsgi uwsgi-python py-flask py-mysqlclient && \
+apk add  --no-cache nginx uwsgi uwsgi-python py-flask py-mysqlclient
 COPY . /uwsgi
 WORKDIR /uwsgi
 RUN  ls -l && chmod a+x startpython.sh
