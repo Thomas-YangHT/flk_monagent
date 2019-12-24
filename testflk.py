@@ -4,6 +4,7 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask import render_template
+from flask_cors import CORS
 import MySQLdb
 import sys,urllib,urllib2
 import commands
@@ -32,14 +33,16 @@ def chengji_form():
 
 #response context
 def context():
-    if  request.REQUEST.has_key('ClassName'):
-        ClassName=request['ClassName']
-    else:
-        ClassName="1807"
-    if request.REQUEST.has_key('TestLevel'):
-        TestLevel=request['TestLevel']
-    else:
-        TestLevel='1'  
+    if  request.args.has_key('ClassName'):            
+        ClassName=request.args['ClassName']
+        print(ClassName)
+    else:                                             
+        ClassName="1807"                              
+    if request.args.has_key('TestLevel'):      
+        TestLevel=request.args['TestLevel']
+        print(TestLevel)
+    else:                                      
+        TestLevel='1'        
     # conn=MySQLdb.connect(host='192.168.31.140',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     conn=MySQLdb.connect(host='192.168.100.71',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     cur=conn.cursor()
@@ -81,4 +84,5 @@ def jsonquery():
 
 
 if __name__ == '__main__':
+    CORS(app, supports_credentials=True)
     app.run()

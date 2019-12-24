@@ -88,13 +88,16 @@
  <link type="text/css" rel="stylesheet" href="chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/content.css"></head>
 <body style="margin:0 auto;text-align:center;">
 <br>
- <form id="form" name="form" method="get" action=''  >
- 班级: <input type="text" name="ClassName" id="ClassName" value="1807">
- 项目: <input type="text" name="TestLevel" id="TestLevel" value="1">
- 0-学生基本信息；1-计算机基础成绩；
-   <input class="shiny-blue" type="submit" name="Submit" onclick="onSubmit()" value="提交" >
- </form>
 <div id="app">
+ <form id="form" name="form" method="" action=''  >
+ 班级: <input type="text" name="ClassName" id="ClassName" value="1807" v-model="formMess.ClassName">
+ 项目: <input type="text" name="TestLevel" id="TestLevel" value="1" v-model="formMess.TestLevel">
+ 0-学生基本信息；1-计算机基础成绩；
+   <input class="shiny-blue" type="submit" name="Submit" onclick="Vue.onSubmit()" value="提交" >
+ </form>
+ <span class="shiny-blue" @click="onSubmit()">提交</span>
+
+
    <div> sql: {{info.sql}} </div>
 </br><div style='margin:0 auto;text-align:center;font-size:22px;font-family:SimHei;'>欢迎您
 使用数据查询，数据如下：(共计{{ info.count }}行{{  info.index.length }}列)</div></br>
@@ -120,6 +123,10 @@ new Vue({
         count: '',
         index: '',
         sql: '',
+      },
+      formMess:{
+        ClassName: '1807',
+        TestLevel: '1',
       }
     }
   },
@@ -134,7 +141,7 @@ new Vue({
         formData.append(key,this.formMess[key]);
       }
  
-        axios({
+      axios({
 	    method:"post",
 	    url:"http://192.168.1.71:8101/student/jsonquery",
 	    headers: {
@@ -142,18 +149,16 @@ new Vue({
 	    },
 	    withCredentials:true,
 	    data:formData
-	}).then((res)=>{
-            console.log(res);
-        });
+	    }).then(res => (this.info = response.data))
     }
   },
-  mounted () {
+  /*mounted () {
     axios.post('http://192.168.1.71:8101/student/jsonquery')
       .then(response => (this.info = response.data))
       .catch(function (error) { // 请求失败处理
        console.log(error);
       });
-  }
+  }*/
 })
 </script>
 </body></html>
