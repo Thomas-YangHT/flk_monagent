@@ -4,7 +4,6 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask import render_template
-from flask_cors import CORS
 import MySQLdb
 import sys,urllib,urllib2
 import commands
@@ -75,14 +74,21 @@ def query():
     return "successCallback" + "(" +json.dumps(context())+ ")"
 
 #处理表单提交信息，查询数据库，输出结果  json
-@app.route('/student/jsonquery', methods=['POST'])
+@app.route('/student/jsonquery', methods=['GET','POST'])
 def jsonquery():
     from flask import make_response
     rst = make_response(jsonify(context()))
     rst.headers['Access-Control-Allow-Origin'] = '*'
+    rst.headers['Access-Control-Allow-Method'] = '*'
+    rst.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
     return rst, 201
 
+@app.after_request
+def cors(environ):
+    environ.headers['Access-Control-Allow-Origin']='*'
+    environ.headers['Access-Control-Allow-Method']='*'
+    environ.headers['Access-Control-Allow-Headers']='x-requested-with,content-type'
+    return environ
 
 if __name__ == '__main__':
-    CORS(app, supports_credentials=True)
     app.run()
