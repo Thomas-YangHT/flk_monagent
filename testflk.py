@@ -32,8 +32,12 @@ def chengji_form():
 
 #response context
 def context():
-    ClassName="1807"
-    TestLevel='1'
+    ClassName=request.form['ClassName']
+    TestLevel=request.form['TestLevel']
+    if ClassName=='': 
+        ClassName="1807"
+    if TestLevel=='':
+        TestLevel='1'  
     # conn=MySQLdb.connect(host='192.168.31.140',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     conn=MySQLdb.connect(host='192.168.100.71',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     cur=conn.cursor()
@@ -66,7 +70,7 @@ def query():
     return "successCallback" + "(" +json.dumps(context())+ ")"
 
 #处理表单提交信息，查询数据库，输出结果  json
-@app.route('/student/jsonquery', methods=['GET'])
+@app.route('/student/jsonquery', methods=['POST'])
 def jsonquery():
     from flask import make_response
     rst = make_response(jsonify(context()))
