@@ -34,11 +34,11 @@ def chengji_form():
 def context():
     if  request.REQUEST.has_key('ClassName'):
         ClassName=request['ClassName']
-    else
+    else:
         ClassName="1807"
     if request.REQUEST.has_key('TestLevel'):
         TestLevel=request['TestLevel']
-    else
+    else:
         TestLevel='1'  
     # conn=MySQLdb.connect(host='192.168.31.140',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     conn=MySQLdb.connect(host='192.168.100.71',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')

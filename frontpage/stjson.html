@@ -148,7 +148,7 @@ new Vue({
     }
   },
   mounted () {
-    axios.get('http://192.168.1.71:8101/student/jsonquery')
+    axios.post('http://192.168.1.71:8101/student/jsonquery')
       .then(response => (this.info = response.data))
       .catch(function (error) { // 请求失败处理
        console.log(error);
