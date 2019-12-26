@@ -32,8 +32,16 @@ def chengji_form():
 
 #response context
 def context():
-    ClassName="1807"
-    TestLevel='1'
+    if  request.args.has_key('ClassName'):            
+        ClassName=request.args['ClassName']
+        print(ClassName)
+    else:                                             
+        ClassName="1807"                              
+    if request.args.has_key('TestLevel'):      
+        TestLevel=request.args['TestLevel']
+        print(TestLevel)
+    else:                                      
+        TestLevel='1'        
     # conn=MySQLdb.connect(host='192.168.31.140',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     conn=MySQLdb.connect(host='192.168.100.71',user='yanght',passwd='yanght',db='students',port=3306,charset='utf8')
     cur=conn.cursor()
@@ -66,13 +74,21 @@ def query():
     return "successCallback" + "(" +json.dumps(context())+ ")"
 
 #处理表单提交信息，查询数据库，输出结果  json
-@app.route('/student/jsonquery', methods=['GET'])
+@app.route('/student/jsonquery', methods=['GET','POST'])
 def jsonquery():
     from flask import make_response
     rst = make_response(jsonify(context()))
     rst.headers['Access-Control-Allow-Origin'] = '*'
+    rst.headers['Access-Control-Allow-Method'] = '*'
+    rst.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
     return rst, 201
 
+@app.after_request
+def cors(environ):
+    environ.headers['Access-Control-Allow-Origin']='*'
+    environ.headers['Access-Control-Allow-Method']='*'
+    environ.headers['Access-Control-Allow-Headers']='x-requested-with,content-type'
+    return environ
 
 if __name__ == '__main__':
     app.run()
