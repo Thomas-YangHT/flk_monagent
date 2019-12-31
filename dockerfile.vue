@@ -8,4 +8,4 @@ RUN apk add make && \
    cd vue-element-admin && \
    npm install --registry=https://registry.npm.taobao.org
 WORKDIR vue-element-admin
-CMD [ '/usr/bin/npm' 'run' 'dev' ]  
+CMD [ '/usr/bin/npm','run','dev' ]  

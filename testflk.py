@@ -80,15 +80,15 @@ def jsonquery():
     rst = make_response(jsonify(context()))
     rst.headers['Access-Control-Allow-Origin'] = '*'
     rst.headers['Access-Control-Allow-Method'] = '*'
-    rst.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
+    rst.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type,Accept'
     return rst, 201
 
-@app.after_request
-def cors(environ):
-    environ.headers['Access-Control-Allow-Origin']='*'
-    environ.headers['Access-Control-Allow-Method']='*'
-    environ.headers['Access-Control-Allow-Headers']='x-requested-with,content-type'
-    return environ
+#@app.after_request
+#def cors(environ):
+#    environ.headers['Access-Control-Allow-Origin']='*'
+#    environ.headers['Access-Control-Allow-Method']='*'
+#    environ.headers['Access-Control-Allow-Headers']='x-requested-with,content-type'
+#    return environ
 
 if __name__ == '__main__':
     app.run()
